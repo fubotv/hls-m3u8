@@ -1150,6 +1150,10 @@ func (p *MediaPlaylist) encode(segmentsToSkipInTotal uint64) *bytes.Buffer {
 		writePreloadHint(&p.buf, p.PreloadHints)
 	}
 
+	for _, dr := range p.TrailingSCTE35DateRanges {
+		writeDateRange(&p.buf, dr, p.WritePrecision())
+	}
+
 	if p.Closed {
 		p.buf.WriteString("#EXT-X-ENDLIST\n")
 	}
